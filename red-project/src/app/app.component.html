@@ -3,8 +3,11 @@
     (blueprintCreated)="onBlueprintAdded($event)"></app-cockpit>
   <hr>
   <div class="row">
+    <button type="button" class="btn btn-primary" (click)="onChangeFirst()">Change first element</button>
+    <button type="button" class="btn btn-danger" (click)="onDestroyFirst()">Destroy first element</button>
     <app-server *ngFor="let serverElement of serverElements"
-      [srvElement]="serverElement" class="col-md-6">
+      [srvElement]="serverElement" class="col-md-6"
+      [name]="serverElement.name">
       <p class="card-text">
         <strong *ngIf="serverElement.type === 'server'" style="color: red">{{ serverElement.content }}</strong>
         <em *ngIf="serverElement.type === 'blueprint'">{{ serverElement.content }}</em>

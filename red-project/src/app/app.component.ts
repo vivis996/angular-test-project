@@ -34,4 +34,18 @@ export class AppComponent {
       content: bluerpintData.blueprintContent,
     });
   }
+
+  onChangeFirst(): void {
+    if (this.serverElements.length == 0){
+      return;
+    }
+    this.serverElements[0].name = "Changed!";
+  }
+
+  onDestroyFirst(): void {
+    if (this.serverElements.length == 0){
+      return;
+    }
+    this.serverElements.splice(0, 1);
+  }
 }
