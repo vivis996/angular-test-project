@@ -27,6 +27,9 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    Ingredients
+    Ingredients:
+    <ul>
+      <li *ngFor="let ingredient of recipe.ingredients">{{ ingredient.name }}</li>
+    </ul>
   </div>
 </div>
