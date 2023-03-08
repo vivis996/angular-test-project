@@ -6,17 +6,6 @@
 <hr>
 <div class="row">
   <div class="col-md-12 list-group">
-    <a href="javascript:;" class="list-group-item list-group-item-action" *ngFor="let recipe of recipes">
-      <div class="row">
-        <div class="col-md-9">
-          <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
-          <p class="list-group-item-text">{{ recipe.description }}</p>
-        </div>
-        <div class="col-md-3">
-          <img [src]="recipe.imagePath" alt="{{ recipe.name }} image" class="image-responsive img-thumbnail" style="max-height: 100px;"/>
-        </div>
-      </div>
-    </a>
-    <app-recipe-item></app-recipe-item>
+    <app-recipe-item *ngFor="let recipe of recipes" [recipe]="recipe"></app-recipe-item>
   </div>
 </div>
