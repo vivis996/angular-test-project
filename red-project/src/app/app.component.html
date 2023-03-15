@@ -1,10 +1,9 @@
 <div class="container">
   <div class="row">
-      <app-new-account (accountAdded)="onAccountAdded($event)"></app-new-account>
+      <app-new-account></app-new-account>
   </div>
   <div class="row">
     <app-account class="col-md-6" *ngFor="let acc of accounts; let i = index"
-      [account]="acc" [id]="i"
-      (statusChanged)="onStatusChanged($event)"></app-account>
+      [account]="acc" [id]="i"></app-account>
   </div>
 </div>
