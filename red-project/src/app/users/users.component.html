@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-3">
     <div class="list-group">
-      <a href="javascript:;" class="list-group-item" *ngFor="let user of users">
+      <a [routerLink]="['/users', user.id, user.name]" class="list-group-item" *ngFor="let user of users">
         {{ user.name }}
       </a>
     </div>
