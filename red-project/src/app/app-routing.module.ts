@@ -5,11 +5,12 @@ import { AuthGuad } from "./auth-guard.service";
 import { HomeComponent } from "./home/home.component";
 import { CanDeactivateGuard } from "./servers/edit-server/can-deactivate-guard.service";
 import { EditServerComponent } from "./servers/edit-server/edit-server.component";
-import { PageNotFoundComponent } from "./servers/error/page-not-found/page-not-found.component";
+import { PageNotFoundComponent } from "./error/page-not-found/page-not-found.component";
 import { ServerComponent } from "./servers/server/server.component";
 import { ServersComponent } from "./servers/servers.component";
 import { UserComponent } from "./users/user/user.component";
 import { UsersComponent } from "./users/users.component";
+import { ErrorComponent } from "./error/error.component";
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, },
@@ -25,7 +26,8 @@ const appRoutes: Routes = [
     { path: ':id', component: ServerComponent, },
     { path: ':id/edit', component: EditServerComponent, canDeactivate: [CanDeactivateGuard], },
   ]},
-  { path: 'error/404', component: PageNotFoundComponent, },
+  // { path: 'error/404', component: PageNotFoundComponent, },
+  { path: 'error/404', component: ErrorComponent, data: { message: 'Page not found!'} },
   { path: '**', redirectTo: '/error/404', pathMatch: 'full', },
 ];
 
