@@ -3,6 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { AuthGuad } from "./auth-guard.service";
 
 import { HomeComponent } from "./home/home.component";
+import { CanDeactivateGuard } from "./servers/edit-server/can-deactivate-guard.service";
 import { EditServerComponent } from "./servers/edit-server/edit-server.component";
 import { PageNotFoundComponent } from "./servers/error/page-not-found/page-not-found.component";
 import { ServerComponent } from "./servers/server/server.component";
@@ -22,7 +23,7 @@ const appRoutes: Routes = [
     component: ServersComponent,
     children: [
     { path: ':id', component: ServerComponent, },
-    { path: ':id/edit', component: EditServerComponent, },
+    { path: ':id/edit', component: EditServerComponent, canDeactivate: [CanDeactivateGuard], },
   ]},
   { path: 'error/404', component: PageNotFoundComponent, },
   { path: '**', redirectTo: '/error/404', pathMatch: 'full', },
