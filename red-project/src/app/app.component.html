@@ -18,7 +18,17 @@
             <div class="form-group">
               <label for="email">email</label>
               <input type="text" id="email" class="form-control" formControlName="email">
-              <span class="help-block" *ngIf="!signupForm.get('userData.email').valid && signupForm.get('userData.email').touched">Please enter a valid email!</span>
+              <span class="help-block" *ngIf="!signupForm.get('userData.email').valid && signupForm.get('userData.email').touched">
+                <span class="help-block" *ngIf="signupForm.get('userData.email').hasError('emailIsForbidden')">
+                  This email is invalid!
+                </span>
+                <span class="help-block" *ngIf="signupForm.get('userData.email').hasError('email')">
+                  Type a valid email!
+                </span>
+                <span class="help-block" *ngIf="signupForm.get('userData.email').hasError('required')">
+                  This field is required!
+                </span>
+              </span>
             </div>
           </div>
           <div class="radio" *ngFor="let gender of genders">
