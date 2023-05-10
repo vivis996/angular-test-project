@@ -16,10 +16,10 @@
         </div>
         <div class="col-md-12 form-group">
           <label for="imagePath">Image Url</label>
-          <input type="text" id="imagePath" name="imagePath" formControlName="imagePath" class="form-control">
+          <input type="text" id="imagePath" name="imagePath" formControlName="imagePath" class="form-control" #imagePath>
         </div>
-        <div class="col-md-12 form-group">
-          <img [src]="" alt=" image" class="image-responsive img-thumbnail" style="max-height: 20em;">
+        <div class="col-md-12 form-group" *ngIf="imagePath.value.length > 5">
+          <img [src]="imagePath.value" alt=" image" class="image-responsive img-thumbnail" style="max-height: 20em;">
         </div>
         <div class="col-md-12 form-group">
           <label for="description">Description</label>
