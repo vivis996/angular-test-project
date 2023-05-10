@@ -8,6 +8,8 @@ import { ShoppingListService } from './shopping-list.service';
   providedIn: 'root'
 })
 export class RecipeService {
+  recipesChanged = new Subject<Recipe[]>();
+
   private recipes: Recipe[] = [
     new Recipe('A test recipe', 'Simple a test', 'https://bit.ly/3SnSwGZ', [
       new Ingredient('Egg', 2),
@@ -31,5 +33,15 @@ export class RecipeService {
 
   addIngredientToShoppingList(ingredients: Ingredient[]): void {
     this.slService.addIngredients(ingredients);
+  }
+
+  addRecipe(recipe: Recipe): void {
+    this.recipes.push(recipe);
+    this.recipesChanged.next(this.getRecipes());
+  }
+
+  udpateRecipe(index: number, newRecipe: Recipe): void {
+    this.recipes[index] = newRecipe;
+    this.recipesChanged.next(this.getRecipes());
   }
 }
