@@ -8,24 +8,24 @@ import { Ingredient } from '../shared/ingredient.model';
 export class ShoppingListService {
   ingredientsChanged = new Subject<Ingredient[]>();
   startEditing = new Subject<number>();
-
+  
   private ingredients: Ingredient[] = [
     new Ingredient('Apples', 5),
     new Ingredient('Tomatoes', 10),
   ];
-
+  
   getIngredient(index: number): Ingredient {
     return this.ingredients[index];
   }
-
+  
   getIngredients(): Ingredient[] {
     return this.ingredients.slice();
   }
-
+  
   addIngredient(ingredient: Ingredient): void {
     this.addIngredients([ingredient]);
   }
-
+  
   addIngredients(ingredients: Ingredient[]): void {
     const response = this.validateNotRepeatIngredients(ingredients);
     if (response.length > 0) {
@@ -33,9 +33,14 @@ export class ShoppingListService {
     }
     this.ingredientsChanged.next(this.ingredients.slice());
   }
-
+  
   updateIngredient(index: number, newIngredient : Ingredient): void {
     this.ingredients[index] = newIngredient;
+    this.ingredientsChanged.next(this.ingredients.slice());
+  }
+  
+  deleteIngredient(index: number) {
+    this.ingredients.splice(index, 1);
     this.ingredientsChanged.next(this.ingredients.slice());
   }
 
