@@ -12,9 +12,9 @@ export class RecipeEditComponent implements OnInit {
   id: number;
   editMode = false;
   recipeForm: FormGroup;
-
+  
   constructor(private route: ActivatedRoute, private recipeService: RecipeService) {}
-
+  
   ngOnInit(): void {
     this.route.params.subscribe(
       (params: Params) => {
@@ -23,24 +23,28 @@ export class RecipeEditComponent implements OnInit {
         console.log('Edit mode: ' + this.editMode);
         this.initForm();
       }
-    );
-  }
-  
-  private initForm(): void {
-    let recipeName = '';
-    let recipeImagePath = '';
-    let recipeDescription = '';
-    if (this.editMode) {
-      const recipe = this.recipeService.getRecipe(this.id);
-      recipeName = recipe.name;
-      recipeImagePath = recipe.imagePath;
-      recipeDescription = recipe.description;
+      );
     }
     
-    this.recipeForm = new FormGroup({
-      'name': new FormControl<string>(recipeName),
-      'imagePath': new FormControl<string>(recipeImagePath),
-      'description': new FormControl<string>(recipeDescription),
+    private initForm(): void {
+      let recipeName = '';
+      let recipeImagePath = '';
+      let recipeDescription = '';
+      if (this.editMode) {
+        const recipe = this.recipeService.getRecipe(this.id);
+        recipeName = recipe.name;
+        recipeImagePath = recipe.imagePath;
+        recipeDescription = recipe.description;
+      }
+      
+      this.recipeForm = new FormGroup({
+        'name': new FormControl<string>(recipeName),
+        'imagePath': new FormControl<string>(recipeImagePath),
+        'description': new FormControl<string>(recipeDescription),
     });
+  }
+
+  onSubmit(): void {
+    console.log(this.recipeForm.value);
   }
 }
