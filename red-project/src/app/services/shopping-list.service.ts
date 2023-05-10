@@ -31,17 +31,17 @@ export class ShoppingListService {
     if (response.length > 0) {
       this.ingredients.push(...response);
     }
-    this.ingredientsChanged.next(this.ingredients.slice());
+    this.ingredientsChanged.next(this.getIngredients());
   }
   
   updateIngredient(index: number, newIngredient : Ingredient): void {
     this.ingredients[index] = newIngredient;
-    this.ingredientsChanged.next(this.ingredients.slice());
+    this.ingredientsChanged.next(this.getIngredients());
   }
   
   deleteIngredient(index: number) {
     this.ingredients.splice(index, 1);
-    this.ingredientsChanged.next(this.ingredients.slice());
+    this.ingredientsChanged.next(this.getIngredients());
   }
 
   validateNotRepeatIngredients(ingredients: Ingredient[]): Ingredient[] {
