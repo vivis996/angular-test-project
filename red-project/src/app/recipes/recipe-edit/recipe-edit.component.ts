@@ -75,10 +75,11 @@ export class RecipeEditComponent implements OnInit {
     else {
       this.recipeService.addRecipe(values);
     }
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   onAddIngredient(): void {
-    (<FormArray>this.recipeForm.get('ingredients')).push(
+    (this.recipeForm.get('ingredients') as FormArray).push(
       new FormGroup({
         name: new FormControl<string>(null, Validators.required),
         amount: new FormControl<Number>(null, [
@@ -87,6 +88,10 @@ export class RecipeEditComponent implements OnInit {
         ]),
       })
     );
+  }
+
+  onDeleteIngredient(index: number): void {
+    (this.recipeForm.get('ingredients') as FormArray).removeAt(index);
   }
 
   get controls(): FormControl[] {
