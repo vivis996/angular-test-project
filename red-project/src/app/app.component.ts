@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -25,10 +26,14 @@ export class AppComponent implements OnInit {
   }
 
   private fetchPosts(){
-    this.http.get(this.urlDatabaseFireBase + 'posts.json')
-            .subscribe(posts => {
-              console.log(posts);
-            });
+    this.http
+      .get(this.urlDatabaseFireBase + 'posts.json')
+      .pipe(map(responseData =>{
+        return Object.entries(responseData).map(([id, post]) => ({ ...post, id}));
+      }))
+      .subscribe(posts => {
+        console.log(posts);
+      });
   }
 
   onFetchPosts() {
