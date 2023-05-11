@@ -20,10 +20,11 @@ export class AppComponent implements OnInit {
 
   onCreatePost(postData: Post) {
     // Send Http request
-    this.http.post<{ name: string }>(this.urlDatabaseFireBase + 'posts.json', postData)
-            .subscribe(responseData => {
-              console.log(responseData);
-            });
+    this.http
+      .post<{ name: string }>(this.urlDatabaseFireBase + 'posts.json', postData)
+      .subscribe(responseData => {
+        console.log(responseData);
+      });
   }
 
   private fetchPosts(){
@@ -33,7 +34,7 @@ export class AppComponent implements OnInit {
         return Object.entries(responseData).map(([id, post]) => ({ ...post, id}));
       }))
       .subscribe(posts => {
-        console.log(posts[0].title);
+        this.loadedPosts = posts;
       });
   }
 
