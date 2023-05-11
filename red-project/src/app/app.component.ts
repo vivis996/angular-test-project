@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Post } from './post.model';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { map } from 'rxjs/operators';
 })
 export class AppComponent implements OnInit {
   urlDatabaseFireBase: string = 'https://angular-the-complete-gui-3c98a-default-rtdb.firebaseio.com/';
-  loadedPosts = [];
+  loadedPosts: Post[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -17,9 +18,9 @@ export class AppComponent implements OnInit {
     this.fetchPosts();
   }
 
-  onCreatePost(postData: { title: string; content: string }) {
+  onCreatePost(postData: Post) {
     // Send Http request
-    this.http.post(this.urlDatabaseFireBase + 'posts.json', postData)
+    this.http.post<{ name: string }>(this.urlDatabaseFireBase + 'posts.json', postData)
             .subscribe(responseData => {
               console.log(responseData);
             });
@@ -27,12 +28,12 @@ export class AppComponent implements OnInit {
 
   private fetchPosts(){
     this.http
-      .get(this.urlDatabaseFireBase + 'posts.json')
+      .get<{ [key: string]: Post}>(this.urlDatabaseFireBase + 'posts.json')
       .pipe(map(responseData =>{
         return Object.entries(responseData).map(([id, post]) => ({ ...post, id}));
       }))
       .subscribe(posts => {
-        console.log(posts);
+        console.log(posts[0].title);
       });
   }
 
