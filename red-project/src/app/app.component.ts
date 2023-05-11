@@ -11,6 +11,7 @@ import { Post } from './post.model';
 export class AppComponent implements OnInit {
   urlDatabaseFireBase: string = 'https://angular-the-complete-gui-3c98a-default-rtdb.firebaseio.com/';
   loadedPosts: Post[] = [];
+  isFetching: boolean = false;
 
   constructor(private http: HttpClient) {}
 
@@ -28,10 +29,13 @@ export class AppComponent implements OnInit {
   }
 
   private fetchPosts(){
+    this.isFetching = true;
     this.http
       .get<{ [key: string]: Post}>(this.urlDatabaseFireBase + 'posts.json')
       .pipe(map(responseData =>{
-        return Object.entries(responseData).map(([id, post]) => ({ ...post, id}));
+        const posts = Object.entries(responseData).map(([id, post]) => ({ ...post, id}));
+        this.isFetching = false;
+        return posts;
       }))
       .subscribe(posts => {
         this.loadedPosts = posts;
