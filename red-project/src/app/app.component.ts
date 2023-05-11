@@ -12,7 +12,9 @@ export class AppComponent implements OnInit {
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.fetchPosts();
+  }
 
   onCreatePost(postData: { title: string; content: string }) {
     // Send Http request
@@ -22,8 +24,16 @@ export class AppComponent implements OnInit {
             });
   }
 
+  private fetchPosts(){
+    this.http.get(this.urlDatabaseFireBase + 'posts.json')
+            .subscribe(posts => {
+              console.log(posts);
+            });
+  }
+
   onFetchPosts() {
     // Send Http request
+    this.fetchPosts();
   }
 
   onClearPosts() {
