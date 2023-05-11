@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import { Post } from './post.model';
+import { PostService } from './post.service';
 
 @Component({
   selector: 'app-root',
@@ -9,45 +9,30 @@ import { Post } from './post.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  urlDatabaseFireBase: string = 'https://angular-the-complete-gui-3c98a-default-rtdb.firebaseio.com/';
   loadedPosts: Post[] = [];
   isFetching: boolean = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private postService: PostService) {}
 
   ngOnInit() {
     this.fetchPosts();
   }
 
-  onCreatePost(postData: Post) {
+  onCreatePost(postData: Post): void  {
     // Send Http request
-    this.http
-      .post<{ name: string }>(this.urlDatabaseFireBase + 'posts.json', postData)
-      .subscribe(responseData => {
-        console.log(responseData);
-      });
+    this.postService.create(postData.title, postData.content)
   }
 
-  private fetchPosts(){
-    this.isFetching = true;
-    this.http
-      .get<{ [key: string]: Post}>(this.urlDatabaseFireBase + 'posts.json')
-      .pipe(map(responseData =>{
-        const posts = Object.entries(responseData).map(([id, post]) => ({ ...post, id}));
-        this.isFetching = false;
-        return posts;
-      }))
-      .subscribe(posts => {
-        this.loadedPosts = posts;
-      });
+  private fetchPosts(): void {
+    this.postService.getAll();
   }
 
-  onFetchPosts() {
+  onFetchPosts(): void  {
     // Send Http request
     this.fetchPosts();
   }
 
-  onClearPosts() {
+  onClearPosts(): void  {
     // Send Http request
   }
 }
