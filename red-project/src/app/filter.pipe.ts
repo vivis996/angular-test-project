@@ -2,6 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'filter',
+  // filter will reload everytime the array/data changes
+  // it cost performance, use only in special ocassions
+  pure: false,
 })
 export class FilterPipe implements PipeTransform {
   transform(value: {
