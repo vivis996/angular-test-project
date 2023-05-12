@@ -37,10 +37,15 @@
           <p>{{ post.content }}</p>
         </li>
       </ul>
-      <p *ngIf="isFetching">
+      <p *ngIf="isFetching && !error">
         <span>
           <img src="https://bit.ly/3LOzd6A" alt="Loading" class="image-responsive img-thumbnail" style="max-height: 2em;">
-        </span>Loading...</p>
+        </span> Loading...
+      </p>
+      <div class="alert alert-danger" *ngIf="error">
+        <h1>An Error Ocurred!</h1>
+        <p>{{ error }}</p>
+      </div>
     </div>
   </div>
 </div>

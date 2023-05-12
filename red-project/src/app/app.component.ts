@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Post } from './post.model';
 import { PostService } from './post.service';
 
@@ -11,6 +11,7 @@ import { PostService } from './post.service';
 export class AppComponent implements OnInit {
   loadedPosts: Post[] = [];
   isFetching: boolean = false;
+  error: string = null;
 
   constructor(private http: HttpClient, private postService: PostService) {}
 
@@ -29,6 +30,8 @@ export class AppComponent implements OnInit {
       .subscribe(posts => {
         this.loadedPosts = posts;
         this.isFetching = false;
+      }, error => {
+        this.error = error.status + ' - ' + error.error.error;
       });
   }
 
@@ -40,6 +43,9 @@ export class AppComponent implements OnInit {
   onClearPosts(): void  {
     // Send Http request
     this.postService.deleteAll()
-      .subscribe(() => this.loadedPosts = []);
+      .subscribe(() => this.loadedPosts = [],
+      error => {
+        this.error = error.status + ' - ' + error.error.error;
+      });
   }
 }
