@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Post } from './post.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Observable, Subject, throwError } from 'rxjs';
 
@@ -25,9 +25,13 @@ export class PostService {
   }
 
   getAll(): Observable<Post[]> {
+    let searchParams = new HttpParams();
+    searchParams = searchParams.append('print', 'pretty');
+    searchParams = searchParams.append('extra', 'value');
     return this.http
       .get<{ [key: string]: Post}>(this.urlDatabaseFireBase + 'posts.json', {
-        headers: new HttpHeaders({ "Custom-Header": "Hello there!" })
+        headers: new HttpHeaders({ "Custom-Header": "Hello there!" }),
+        params: searchParams,
       })
       .pipe(map(responseData =>{
         if (!responseData) {
