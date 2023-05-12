@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Post } from './post.model';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Observable, Subject, } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { Observable, Subject, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +33,11 @@ export class PostService {
         }
         const posts = Object.entries(responseData).map(([id, post]) => ({ ...post, id}));
         return posts;
-      }));
+      },
+      catchError(errorRes => {
+        // Send to analytics server
+        return throwError(errorRes);
+      })));
   }
 
   deleteAll(): Observable<any> {
