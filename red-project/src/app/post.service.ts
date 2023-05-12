@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Post } from './post.model';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Observable, } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,14 +20,12 @@ export class PostService {
       });
   }
 
-  getAll(): void {
-    this.http
+  getAll(): Observable<Post[]> {
+    return this.http
       .get<{ [key: string]: Post}>(this.urlDatabaseFireBase + 'posts.json')
       .pipe(map(responseData =>{
         const posts = Object.entries(responseData).map(([id, post]) => ({ ...post, id}));
         return posts;
-      }))
-      .subscribe(posts => {
-      });
+      }));
   }
 }
