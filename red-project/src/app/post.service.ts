@@ -24,8 +24,15 @@ export class PostService {
     return this.http
       .get<{ [key: string]: Post}>(this.urlDatabaseFireBase + 'posts.json')
       .pipe(map(responseData =>{
+        if (!responseData) {
+          return [];
+        }
         const posts = Object.entries(responseData).map(([id, post]) => ({ ...post, id}));
         return posts;
       }));
+  }
+
+  deleteAll(): Observable<any> {
+    return this.http.delete(this.urlDatabaseFireBase + 'posts.json');
   }
 }
