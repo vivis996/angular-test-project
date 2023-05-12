@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Post } from './post.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Observable, Subject, throwError } from 'rxjs';
 
@@ -26,7 +26,9 @@ export class PostService {
 
   getAll(): Observable<Post[]> {
     return this.http
-      .get<{ [key: string]: Post}>(this.urlDatabaseFireBase + 'posts.json')
+      .get<{ [key: string]: Post}>(this.urlDatabaseFireBase + 'posts.json', {
+        headers: new HttpHeaders({ "Custom-Header": "Hello there!" })
+      })
       .pipe(map(responseData =>{
         if (!responseData) {
           return [];
