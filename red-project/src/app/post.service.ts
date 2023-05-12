@@ -54,8 +54,9 @@ export class PostService {
     return this.http.delete(this.urlDatabaseFireBase + 'posts.json',
     {
       observe: 'events',
+      responseType: 'text',
     }).pipe(tap(event => {
-          if (event.type === HttpEventType.Sent) {
+        if (event.type === HttpEventType.Sent) {
           console.log('Request was sent');
         }
         if (event.type === HttpEventType.Response) {
