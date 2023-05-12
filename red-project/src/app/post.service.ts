@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { Post } from './post.model';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Observable, } from 'rxjs';
+import { Observable, Subject, } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostService {
   private urlDatabaseFireBase: string = 'https://angular-the-complete-gui-3c98a-default-rtdb.firebaseio.com/';
+  error = new Subject<string>();
+  
   constructor(private http: HttpClient) {}
 
   create(title: string, content: string): void {
@@ -17,6 +19,8 @@ export class PostService {
       .post<{ name: string }>(this.urlDatabaseFireBase + 'posts.json', post)
       .subscribe((responseData) => {
         console.log(responseData);
+      }, error => {
+        this.error.next(error.message);
       });
   }
 
