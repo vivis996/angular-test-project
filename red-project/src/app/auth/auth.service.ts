@@ -7,8 +7,8 @@ import { AuthResponseData } from "./auth.model";
   providedIn: 'root',
 })
 export class AuthService {
-  urlAuth: string = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=';
-  apiKey: string = '[AIzaSyCQX7qVP2cpW7x9ctJKG48OKOFOLhTrahU]';
+  private urlAuth: string = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=';
+  private apiKey: string = 'AIzaSyCQX7qVP2cpW7x9ctJKG48OKOFOLhTrahU';
   
   constructor(private http: HttpClient)
   {}
