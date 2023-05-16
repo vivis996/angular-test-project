@@ -23,6 +23,11 @@ export class RecipeService {
 
   constructor(private slService: ShoppingListService) {}
 
+  setRecipes(recipes: Recipe[]): void {
+    this.recipes = recipes;
+    this.informUpdate();
+  }
+
   getRecipes(): Recipe[] {
     return this.recipes.slice();
   }
@@ -37,16 +42,20 @@ export class RecipeService {
 
   addRecipe(recipe: Recipe): void {
     this.recipes.push(recipe);
-    this.recipesChanged.next(this.getRecipes());
+    this.informUpdate();
   }
 
   udpateRecipe(index: number, newRecipe: Recipe): void {
     this.recipes[index] = newRecipe;
-    this.recipesChanged.next(this.getRecipes());
+    this.informUpdate();
   }
   
-  deleteRecipe(index: number) {
+  deleteRecipe(index: number): void {
     this.recipes.splice(index, 1);
+    this.informUpdate();
+  }
+
+  informUpdate(): void {
     this.recipesChanged.next(this.getRecipes());
   }
 }

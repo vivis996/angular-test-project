@@ -7,9 +7,19 @@ import { DataStorageService } from '../shared/data-storage.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
+  isToggle: boolean = true;
+  
   constructor(private dataStorageService: DataStorageService) {}
 
   onSaveData(): void {
     this.dataStorageService.storeRecipes();
+  }
+
+  onFetchData(): void {
+    this.dataStorageService.fetchRecipes();
+  }
+  
+  onToggleNavbar(): void {
+    this.isToggle = !this.isToggle;
   }
 }

@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { RecipeService } from "../services/recipe.service";
+import { Recipe } from "../recipes/recipe.model";
 
 @Injectable({
   providedIn: 'root',
@@ -14,5 +15,12 @@ export class DataStorageService {
     const recipes = this.recipeService.getRecipes();
     this.http.put(this.urlDatabaseFirebase + this.endPoint, recipes)
       .subscribe(response =>  console.log(response));
+  }
+
+  fetchRecipes(): void {
+    this.http.get<Recipe[]>(this.urlDatabaseFirebase + this.endPoint)
+      .subscribe(recipes => {
+        this.recipeService.setRecipes(recipes);
+      });
   }
 }
