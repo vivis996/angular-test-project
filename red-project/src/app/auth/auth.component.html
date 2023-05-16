@@ -10,6 +10,7 @@
       <app-loading-spinner></app-loading-spinner>
     </div>
     <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
+      <legend>{{ isLoginMode ? 'Login' : 'Sign Up' }}</legend>
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
         <input type="email" id="email" class="form-control" ngModel name="email" required email>
