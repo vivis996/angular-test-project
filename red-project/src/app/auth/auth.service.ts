@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, catchError, throwError } from "rxjs";
 import { AuthResponseData } from "./auth.model";
@@ -20,7 +20,7 @@ export class AuthService {
       email,
       password,
       returnSecureToken: true,
-    }).pipe(catchError(errorResponse => this.getError(errorResponse)));
+    }).pipe(catchError(this.handleError));
   }
 
   login(email: string, password: string): Observable<AuthResponseData> {
@@ -28,10 +28,10 @@ export class AuthService {
       email,
       password,
       returnSecureToken: true,
-    }).pipe(catchError(errorResponse => this.getError(errorResponse)));
+    }).pipe(catchError(this.handleError));
   }
 
-  getError(errorResponse): Observable<never> {
+  private handleError(errorResponse: HttpErrorResponse): Observable<never> {
     let errorMessage: string = 'An unknown error ocurred!';
     if (!errorResponse.error || !errorResponse.error.error) {
       return throwError(errorMessage);
@@ -47,10 +47,10 @@ export class AuthService {
         errorMessage = 'We have blocked all requests from this device due to unusual activity. Try again later!'
         break;
       case 'EMAIL_NOT_FOUND':
-        errorMessage = 'There is no user record corresponding to this identifier. The user may have been deleted!'
+        errorMessage = 'This email does not exist!'
         break;
       case 'INVALID_PASSWORD':
-        errorMessage = 'The password is invalid or the user does not have a password!'
+        errorMessage = 'This password is not correct!'
         break;
       case 'USER_DISABLED':
         errorMessage = 'The user account has been disabled by an administrator!'
