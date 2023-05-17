@@ -3,6 +3,7 @@ import { NgForm } from "@angular/forms";
 import { AuthService } from "./auth.service";
 import { Observable } from "rxjs";
 import { AuthResponseData } from "./auth.model";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-auth',
@@ -13,7 +14,7 @@ export class AuthComponent {
   isLoading: boolean = false;
   error: string = null;
 
-  constructor(private authService: AuthService)
+  constructor(private authService: AuthService, private router: Router)
   {}
 
   onSwitchMode(): void {
@@ -39,8 +40,8 @@ export class AuthComponent {
     }
 
     authObs.subscribe(response => {
-        console.log(response);
         this.isLoading = false;
+        this.router.navigate(['/recipes']);
       },
       errorMessage => {
         this.error = errorMessage;

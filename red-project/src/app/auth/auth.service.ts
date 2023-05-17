@@ -24,7 +24,7 @@ export class AuthService {
       email,
       password,
       returnSecureToken: true,
-    }).pipe(catchError(this.handleError), tap(this.handleAuthentication));
+    }).pipe(catchError(this.handleError), tap(response => this.handleAuthentication(response)));
   }
 
   login(email: string, password: string): Observable<AuthResponseData> {
@@ -32,7 +32,7 @@ export class AuthService {
       email,
       password,
       returnSecureToken: true,
-    }).pipe(catchError(this.handleError), tap(this.handleAuthentication));
+    }).pipe(catchError(this.handleError), tap(response => this.handleAuthentication(response)));
   }
 
   private handleAuthentication(response): void {
