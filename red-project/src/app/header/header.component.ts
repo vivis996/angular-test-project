@@ -40,4 +40,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onToggleNavbar(): void {
     this.isToggle = !this.isToggle;
   }
+
+  onLogout(): void {
+    this.authService.logout();
+  }
 }
