@@ -1,11 +1,12 @@
 <div class="row">
   <div class="col-md-6 col-xs-12 offset-md-3">
-    <div class="alert alert-danger" *ngIf="error">
+    <app-alert [message]="error" *ngIf="error"></app-alert>
+    <!-- <div class="alert alert-danger" *ngIf="error">
       <h5 class="alert-heading">An error ocurred!</h5>
       <p class="mb-0">
         {{ error }}
       </p>
-    </div>
+    </div> -->
     <div class="text-center" *ngIf="isLoading">
       <app-loading-spinner></app-loading-spinner>
     </div>
