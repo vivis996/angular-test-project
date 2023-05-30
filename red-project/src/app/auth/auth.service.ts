@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, throwError } from "rxjs";
 import { AuthResponseData } from "./auth.model";
 import { User } from "./user.model";
 import { Router } from "@angular/router";
+import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class AuthService {
   private urlAuth: string = 'https://identitytoolkit.googleapis.com/v1/';
   private urlSignup: string = 'accounts:signUp?key=';
   private urlLogin: string = 'accounts:signInWithPassword?key=';
-  private apiKey: string = 'AIzaSyCQX7qVP2cpW7x9ctJKG48OKOFOLhTrahU';
+  private apiKey: string = environment.firebaseAPIKey;
 
   user: BehaviorSubject<User> = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
