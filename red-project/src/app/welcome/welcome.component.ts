@@ -5,6 +5,7 @@ import { DetailsComponent } from './details/details.component';
   standalone: true,
   imports: [DetailsComponent],
   selector: 'app-welcome',
-  templateUrl: './welcome.component.html'
+  templateUrl: './welcome.component.html',
 })
-export class WelcomeComponent {}
+export class WelcomeComponent {
+}
